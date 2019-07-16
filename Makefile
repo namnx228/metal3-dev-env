@@ -1,7 +1,7 @@
 all: install_requirements configure_host launch_mgmt_cluster
 
 install_requirements:
-	./01_install_requirements.sh
+	./ubuntu_requirement_installation.sh
 
 configure_host:
 	./02_configure_host.sh

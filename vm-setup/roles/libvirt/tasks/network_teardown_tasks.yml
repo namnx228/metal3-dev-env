@@ -13,3 +13,16 @@
     name: "{{ item.name }}"
   with_items: "{{ networks }}"
   become: true
+
+- name: Delete bridges on Ubuntu
+  shell: |
+     ifconfig baremetal down | true
+     ifconfig provisioning down | true
+     brctl delbr baremetal | true
+     brctl delbr provisioning | true
+
+  when:
+    - ansible_distribution == 'Ubuntu'
+
+  become: yes
+
