@@ -52,6 +52,7 @@ OS=$(uname -a)
 if [[ $OS == *Ubuntu* ]]; then
   # source ubuntu_bridge_network_configuration.sh
   source ubuntu_bridge_network_configuration.temp.sh
+  source disable_apparmor_driver_libvirtd.sh
 else
   if [ "$MANAGE_PRO_BRIDGE" == "y" ]; then
       # Adding an IP address in the libvirt definition for this network results in
