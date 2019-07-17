@@ -135,7 +135,16 @@ if [ "$MANAGE_BR_BRIDGE" == "y" ] ; then
   if [ "$ADDN_DNS" ] ; then
     echo "server=$ADDN_DNS" | sudo tee /etc/NetworkManager/dnsmasq.d/upstream.conf
   fi
-  sudo netplan apply
+  OS=$(uname -a)
+  if [[ $OS == *Ubuntu* ]]; then
+    sudo netplan apply
+  else
+    if systemctl is-active --quiet NetworkManager; then
+      sudo systemctl reload NetworkManager
+    else
+      sudo systemctl restart NetworkManager
+    fi
+  fi
 fi
 
 mkdir -p "$IRONIC_DATA_DIR/html/images"
