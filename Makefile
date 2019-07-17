@@ -1,12 +1,7 @@
 all: install_requirements configure_host launch_mgmt_cluster
 
 install_requirements:
-	OS := $(shell ./detect_os.sh)
-	ifeq ($(OS),Ubuntu)
-		./ubuntu_requirement_installation.sh
-	else
-		./01_install_requirements.sh
-	endif
+	./01_install_requirements.sh
 
 configure_host:
 	./02_configure_host.sh
