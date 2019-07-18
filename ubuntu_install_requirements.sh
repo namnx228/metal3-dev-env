@@ -34,7 +34,6 @@ sudo apt -y install \
   curl \
   dnsmasq \
   figlet \
-  golang \
   nmap \
   patch \
   psmisc \
@@ -83,14 +82,18 @@ sudo apt -y update
 # make sure additional requirments are installed
 
 # Setup Golang 1.12
-mkdir /tmp/dsi309gdkh7 -p
-curl -O  https://dl.google.com/go/go1.12.7.linux-amd64.tar.gz -o /tmp/dsi309gdkh7/golang.tar.gz
-tar -xvf /tmp/dsi309gdkh7/golang.tar.gz
-mv go /usr/local/bin/
-rm /tmp/dsi309gdkh7
-if [[  $PATH != *go* ]]; then
-  export PATH=$PATH:/usr/local/bin/go/bin
-fi
+sudo add-apt-repository ppa:longsleep/golang-backports
+sudo apt-get update
+sudo apt-get install -y golang-go
+
+# mkdir /tmp/dsi309gdkh7 -p
+# curl -O  https://dl.google.com/go/go1.12.7.linux-amd64.tar.gz -o /tmp/dsi309gdkh7/golang.tar.gz
+# tar -xvf /tmp/dsi309gdkh7/golang.tar.gz
+# mv go /usr/local/bin/
+# rm /tmp/dsi309gdkh7
+# if [[  $PATH != *go* ]]; then
+#   export PATH=$PATH:/usr/local/bin/go/bin
+# fi
 
 
 ##No bind-utils. It is for host, nslookop,..., no need in ubuntu
