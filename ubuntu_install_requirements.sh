@@ -84,7 +84,6 @@ sudo apt -y update
 
 ##No bind-utils. It is for host, nslookop,..., no need in ubuntu
 sudo apt -y install \
-  ansible \
   jq \
   libguestfs-tools \
   nodejs \
@@ -100,6 +99,7 @@ sudo apt -y install \
 
 # Install python packages not included as rpms
 sudo pip install \
+  ansible==2.8.2 \
   lolcat \
   yq \
   virtualbmc \
