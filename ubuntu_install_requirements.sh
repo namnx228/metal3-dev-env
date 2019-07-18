@@ -75,6 +75,8 @@ echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/source
 
 # Add this repository to install podman
 sudo add-apt-repository -y ppa:projectatomic/ppa
+# Add this repository to install Golang 1.12
+sudo add-apt-repository -y ppa:longsleep/golang-backports
 
 # Update some packages from new repos
 sudo apt -y update
@@ -82,9 +84,6 @@ sudo apt -y update
 # make sure additional requirments are installed
 
 # Setup Golang 1.12
-sudo add-apt-repository ppa:longsleep/golang-backports
-sudo apt-get update
-sudo apt-get install -y golang-go
 
 # mkdir /tmp/dsi309gdkh7 -p
 # curl -O  https://dl.google.com/go/go1.12.7.linux-amd64.tar.gz -o /tmp/dsi309gdkh7/golang.tar.gz
@@ -106,6 +105,7 @@ sudo apt -y install \
   libvirt-bin libvirt-clients libvirt-dev \
   python-ironicclient \
   python-ironic-inspector-client \
+  golang-go \
   python-lxml \
   unzip \
   yarn \
