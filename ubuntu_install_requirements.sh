@@ -50,11 +50,7 @@ fi
 
 
 # Install pyenv
-if [[  $(cat ~/.bashrc) != *PYENV_ROOT* ]]; then
-  git clone git://github.com/yyuu/pyenv.git .pyenv
-  echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.bashrc
-  echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.bashrc
-  echo -e 'if command -v pyenv 1>/dev/null 2>&1; then\n  eval "$(pyenv init -)"\nfi' >> ~/.bashrc
+if [[ $PATH != *pyenv* ]]; then
   export PYENV_ROOT="$HOME/.pyenv"
   export PATH="$PYENV_ROOT/bin:$PATH"
   if command -v pyenv 1>/dev/null 2>&1; then
@@ -62,7 +58,16 @@ if [[  $(cat ~/.bashrc) != *PYENV_ROOT* ]]; then
   fi
 fi
 
-pyenv install 2.7.5
+if [[  $(cat ~/.bashrc) != *PYENV_ROOT* ]]; then
+  if ! [ -d "$HOME/.pyenv" ] ; then
+     git clone git://github.com/yyuu/pyenv.git ~/.pyenv
+  fi
+  echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.bashrc
+  echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.bashrc
+  echo -e 'if command -v pyenv 1>/dev/null 2>&1; then\n  eval "$(pyenv init -)"\nfi' >> ~/.bashrc
+fi
+
+pyenv install -s 2.7.5
 pyenv versions
 pyenv global 2.7.5
 # There are some packages which are newer in the tripleo repos
@@ -123,7 +128,7 @@ sudo pip install \
   netaddr \
   requests \
   setuptools \
-  libvirt \
+  libvirt-python \
 
 if ! which minikube 2>/dev/null ; then
     curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64 \
