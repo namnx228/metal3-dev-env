@@ -27,21 +27,18 @@ sudo apt -y update
 # fi
 
 # Install required packages
-# python-{requests,setuptools} required for tripleo-repos install
+
 sudo apt -y install \
-  net-tools \
   crudini \
   curl \
   dnsmasq \
   figlet \
+  zlib1g-dev \
+  libssl1.0-dev \
   nmap \
   patch \
   psmisc \
   python-pip \
-  python-netaddr \
-  python-requests \
-  python-setuptools \
-  python-libvirt \
   wget
 
 # Check if 'ifconfig' is available!
@@ -51,20 +48,22 @@ if [[ ! $(ifconfig) ]]; then
   sudo apt -y install net-tools
 fi
 
-# We're reusing some tripleo pieces for this setup so clone them here
 
-## We don't need TripleO repos in Ubuntu
-##cd
-##if [ ! -d tripleo-repos ]; then
-##  git clone https://git.openstack.org/openstack/tripleo-repos
-##fi
-##pushd tripleo-repos
-##sudo python setup.py install
-##popd
+# Install pyenv
+if [[  $(cat ~/.bashrc) != *PYENV_ROOT* ]]; then
+  echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.bashrc
+  echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.bashrc
+  echo -e 'if command -v pyenv 1>/dev/null 2>&1; then\n  eval "$(pyenv init -)"\nfi' >> ~/.bashrc
+  export PYENV_ROOT="$HOME/.pyenv"
+  export PATH="$PYENV_ROOT/bin:$PATH"
+  if command -v pyenv 1>/dev/null 2>&1; then
+    eval "$(pyenv init -)"
+  fi
+fi
 
-# Needed to get a recent python-virtualbmc package
-#sudo tripleo-repos current-tripleo
-
+pyenv install 2.7.5
+pyenv versions
+pyenv global 2.7.5
 # There are some packages which are newer in the tripleo repos
 
 # Setup yarn and nodejs repositories
@@ -117,7 +116,13 @@ sudo pip install \
   lolcat \
   yq \
   virtualbmc \
-
+  python-ironicclient \
+  python-ironic-inspector-client \
+  lxml \
+  netaddr \
+  requests \
+  setuptools \
+  libvirt \
 
 if ! which minikube 2>/dev/null ; then
     curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64 \
