@@ -27,22 +27,18 @@ sudo apt -y update
 # fi
 
 # Install required packages
-# python-{requests,setuptools} required for tripleo-repos install
+
 sudo apt -y install \
-  net-tools \
   crudini \
   curl \
   dnsmasq \
   figlet \
-  golang \
+  zlib1g-dev \
+  libssl1.0-dev \
   nmap \
   patch \
   psmisc \
   python-pip \
-  python-netaddr \
-  python-requests \
-  python-setuptools \
-  python-libvirt \
   wget
 
 # Check if 'ifconfig' is available!
@@ -52,20 +48,28 @@ if [[ ! $(ifconfig) ]]; then
   sudo apt -y install net-tools
 fi
 
-# We're reusing some tripleo pieces for this setup so clone them here
 
-## We don't need TripleO repos in Ubuntu
-##cd
-##if [ ! -d tripleo-repos ]; then
-##  git clone https://git.openstack.org/openstack/tripleo-repos
-##fi
-##pushd tripleo-repos
-##sudo python setup.py install
-##popd
+# Install pyenv
+if [[ $PATH != *pyenv* ]]; then
+  export PYENV_ROOT="$HOME/.pyenv"
+  export PATH="$PYENV_ROOT/bin:$PATH"
+  if command -v pyenv 1>/dev/null 2>&1; then
+    eval "$(pyenv init -)"
+  fi
+fi
 
-# Needed to get a recent python-virtualbmc package
-#sudo tripleo-repos current-tripleo
+if [[  $(cat ~/.bashrc) != *PYENV_ROOT* ]]; then
+  if ! [ -d "$HOME/.pyenv" ] ; then
+     git clone git://github.com/yyuu/pyenv.git ~/.pyenv
+  fi
+  echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.bashrc
+  echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.bashrc
+  echo -e 'if command -v pyenv 1>/dev/null 2>&1; then\n  eval "$(pyenv init -)"\nfi' >> ~/.bashrc
+fi
 
+pyenv install -s 2.7.5
+pyenv versions
+pyenv global 2.7.5
 # There are some packages which are newer in the tripleo repos
 
 # Setup yarn and nodejs repositories
@@ -76,11 +80,25 @@ echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/source
 
 # Add this repository to install podman
 sudo add-apt-repository -y ppa:projectatomic/ppa
+# Add this repository to install Golang 1.12
+sudo add-apt-repository -y ppa:longsleep/golang-backports
 
 # Update some packages from new repos
 sudo apt -y update
 
 # make sure additional requirments are installed
+
+# Setup Golang 1.12
+
+# mkdir /tmp/dsi309gdkh7 -p
+# curl -O  https://dl.google.com/go/go1.12.7.linux-amd64.tar.gz -o /tmp/dsi309gdkh7/golang.tar.gz
+# tar -xvf /tmp/dsi309gdkh7/golang.tar.gz
+# mv go /usr/local/bin/
+# rm /tmp/dsi309gdkh7
+# if [[  $PATH != *go* ]]; then
+#   export PATH=$PATH:/usr/local/bin/go/bin
+# fi
+
 
 ##No bind-utils. It is for host, nslookop,..., no need in ubuntu
 sudo apt -y install \
@@ -92,6 +110,7 @@ sudo apt -y install \
   libvirt-bin libvirt-clients libvirt-dev \
   python-ironicclient \
   python-ironic-inspector-client \
+  golang-go \
   python-lxml \
   unzip \
   yarn \
@@ -103,7 +122,13 @@ sudo pip install \
   lolcat \
   yq \
   virtualbmc \
-
+  python-ironicclient \
+  python-ironic-inspector-client \
+  lxml \
+  netaddr \
+  requests \
+  setuptools \
+  libvirt-python \
 
 if ! which minikube 2>/dev/null ; then
     curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64 \
