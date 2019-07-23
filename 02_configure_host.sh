@@ -29,17 +29,9 @@ ANSIBLE_FORCE_COLOR=true ansible-playbook \
 
 # Allow local non-root-user access to libvirt
 # Restart libvirtd service to get the new group membership loaded
-OS=$(uname -a)
 if ! id $USER | grep -q libvirt; then
-  if [[$OS == *Ubuntu* ]]; then
-    originalGRP=$(id -g -n)
-    # A trick to add 'libvirt' group to user without reloginrelogin 
-    newgrp libvirt
-    newgrp $originalGRP
-  else
-   sudo usermod -a -G "libvirt" $USER
-   sudo systemctl restart libvirtd
-  fi
+  sudo usermod -a -G "libvirt" $USER
+  sudo systemctl restart libvirtd
 fi
 
 # Usually virt-manager/virt-install creates this: https://www.redhat.com/archives/libvir-list/2008-August/msg00179.html
@@ -56,6 +48,7 @@ EOF
     virsh pool-autostart default
 fi
 
+OS=$(uname -a)
 if [[ $OS == *Ubuntu* ]]; then
   # source ubuntu_bridge_network_configuration.sh
   source ubuntu_bridge_network_configuration.sh
