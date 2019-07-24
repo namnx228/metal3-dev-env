@@ -37,7 +37,7 @@ fi
 # Current user is not effectively in group `libvirt` yet, so give full permission to access `libvirt-sock`. The same permission is given on Centos by default.
 OS=$(uname -a)
 if [[ $OS == *Ubuntu* ]]; then
-  sudo chmod +rwx /var/run/libvirt/libvirt-sock
+  sudo chmod o+rwx /var/run/libvirt/libvirt-sock
 fi
 
 # Usually virt-manager/virt-install creates this: https://www.redhat.com/archives/libvir-list/2008-August/msg00179.html
