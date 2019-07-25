@@ -35,8 +35,7 @@ if ! id $USER | grep -q libvirt; then
 fi
 
 # Current user is not effectively in group `libvirt` yet, so give full permission to access `libvirt-sock`. The same permission is given on Centos by default.
-OS=$(uname -a)
-if [[ $OS == *Ubuntu* ]]; then
+if [[ $OS == ubuntu ]]; then
   sudo chmod o+rwx /var/run/libvirt/libvirt-sock
 fi
 
@@ -54,7 +53,7 @@ EOF
     virsh pool-autostart default
 fi
 
-if [[ $OS == *Ubuntu* ]]; then
+if [[ $OS == ubuntu ]]; then
   # source ubuntu_bridge_network_configuration.sh
   source ubuntu_bridge_network_configuration.sh
   source disable_apparmor_driver_libvirtd.sh
@@ -140,8 +139,7 @@ if [ "$MANAGE_BR_BRIDGE" == "y" ] ; then
   if [ "$ADDN_DNS" ] ; then
     echo "server=$ADDN_DNS" | sudo tee /etc/NetworkManager/dnsmasq.d/upstream.conf
   fi
-  OS=$(uname -a)
-  if [[ $OS == *Ubuntu* ]]; then
+  if [[ $OS == ubuntu ]]; then
     sudo netplan apply
   else
     if systemctl is-active --quiet NetworkManager; then

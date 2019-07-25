@@ -67,7 +67,8 @@ if ! sudo -n uptime &> /dev/null ; then
 fi
 
 # Check OS
-if [[ ! $(awk -F= '/^ID=/ { print $2 }' /etc/os-release | tr -d '"') =~ ^(centos|rhel|ubuntu)$ ]]; then
+OS=$(awk -F= '/^ID=/ { print $2 }' /etc/os-release | tr -d '"')
+if [[ ! $OS =~ ^(centos|rhel|ubuntu)$ ]]; then
   echo "Unsupported OS"
   exit 1
 fi
