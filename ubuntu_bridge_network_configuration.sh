@@ -7,7 +7,9 @@ if [ "$MANAGE_PRO_BRIDGE" == "y" ]; then
      # dnsmasq being run, we don't want that as we have our own dnsmasq, so set
      # the IP address here
      sudo brctl addbr provisioning
-     sudo ifconfig provisioning 172.22.0.1 netmask 255.255.255.0 up 
+     # sudo ifconfig provisioning 172.22.0.1 netmask 255.255.255.0 up 
+     # Use ip command. ifconfig commands are deprecated now.
+     sudo ip addr add dev provisioning 172.22.0.1
 
      # Need to pass the provision interface for bare metal
      if [ "$PRO_IF" ]; then
@@ -19,7 +21,9 @@ if [ "$MANAGE_PRO_BRIDGE" == "y" ]; then
      # Create the baremetal bridge
      if ! [[  $(ifconfig baremetal) ]]; then
        sudo brctl addbr baremetal 
-       sudo ifconfig baremetal 192.168.111.1 netmask 255.255.255.0 up 
+       # sudo ifconfig baremetal 192.168.111.1 netmask 255.255.255.0 up 
+       # Use ip command. ifconfig commands are deprecated now.
+       sudo ip addr add dev baremetal 192.168.111.1
      fi
  
      # Add the internal interface to it if requests, this may also be the interface providing

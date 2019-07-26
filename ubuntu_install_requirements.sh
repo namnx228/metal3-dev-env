@@ -41,22 +41,8 @@ sudo apt -y install \
   python-pip \
   wget
 
-# Check if 'ifconfig' is available!
-if [[ ! $(ifconfig) ]]; then
-  echo "Cannot run ifconfig..."
-  echo "Install net-tools package"
-  sudo apt -y install net-tools
-fi
-
 
 # Install pyenv
-if [[ $PATH != *pyenv* ]]; then
-  export PYENV_ROOT="$HOME/.pyenv"
-  export PATH="$PYENV_ROOT/bin:$PATH"
-  if command -v pyenv 1>/dev/null 2>&1; then
-    eval "$(pyenv init -)"
-  fi
-fi
 
 if [[  $(cat ~/.bashrc) != *PYENV_ROOT* ]]; then
   if ! [ -d "$HOME/.pyenv" ] ; then
@@ -65,6 +51,14 @@ if [[  $(cat ~/.bashrc) != *PYENV_ROOT* ]]; then
   echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.bashrc
   echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.bashrc
   echo -e 'if command -v pyenv 1>/dev/null 2>&1; then\n  eval "$(pyenv init -)"\nfi' >> ~/.bashrc
+fi
+
+if [[ $PATH != *pyenv* ]]; then
+  export PYENV_ROOT="$HOME/.pyenv"
+  export PATH="$PYENV_ROOT/bin:$PATH"
+  if command -v pyenv 1>/dev/null 2>&1; then
+    eval "$(pyenv init -)"
+  fi
 fi
 
 pyenv install -s 2.7.5

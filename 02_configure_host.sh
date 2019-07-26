@@ -33,7 +33,6 @@ if ! id $USER | grep -q libvirt; then
   sudo usermod -a -G "libvirt" $USER
   sudo systemctl restart libvirtd
 fi
-
 # Usually virt-manager/virt-install creates this: https://www.redhat.com/archives/libvir-list/2008-August/msg00179.html
 if ! virsh pool-uuid default > /dev/null 2>&1 ; then
     virsh pool-define /dev/stdin <<EOF
