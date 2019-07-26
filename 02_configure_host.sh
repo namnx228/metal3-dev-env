@@ -34,11 +34,6 @@ if ! id $USER | grep -q libvirt; then
   sudo systemctl restart libvirtd
 fi
 
-# Current user is not effectively in group `libvirt` yet, so give full permission to access `libvirt-sock`. The same permission is given on Centos by default.
-if [[ $OS == ubuntu ]]; then
-  sudo chmod o+rwx /var/run/libvirt/libvirt-sock
-fi
-
 # Usually virt-manager/virt-install creates this: https://www.redhat.com/archives/libvir-list/2008-August/msg00179.html
 if ! virsh pool-uuid default > /dev/null 2>&1 ; then
     virsh pool-define /dev/stdin <<EOF
