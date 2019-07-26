@@ -128,20 +128,17 @@ if [ "$EXT_IF" ]; then
 fi
 
 # Switch NetworkManager to internal DNS
-if [ "$MANAGE_BR_BRIDGE" == "y" ] ; then
+
+if [ "$MANAGE_BR_BRIDGE" == "y" && $OS == "centos" ] ; then
   sudo mkdir -p /etc/NetworkManager/conf.d/
-  sudo crudini --set /etc/NetworkManager/conf.d/dnsmasq.conf main dns dnsmasq
+  sudo crudini --set /etc/NetworkManager/conf.d/dnsmasq.conf main dns dnsmasq 
   if [ "$ADDN_DNS" ] ; then
     echo "server=$ADDN_DNS" | sudo tee /etc/NetworkManager/dnsmasq.d/upstream.conf
   fi
-  if [[ $OS == ubuntu ]]; then
-    sudo netplan apply
+  if systemctl is-active --quiet NetworkManager; then
+    sudo systemctl reload NetworkManager
   else
-    if systemctl is-active --quiet NetworkManager; then
-      sudo systemctl reload NetworkManager
-    else
-      sudo systemctl restart NetworkManager
-    fi
+    sudo systemctl restart NetworkManager
   fi
 fi
 
