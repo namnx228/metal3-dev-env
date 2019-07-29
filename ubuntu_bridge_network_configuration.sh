@@ -12,8 +12,6 @@ if [ "$MANAGE_PRO_BRIDGE" == "y" ]; then
      sudo ip addr add dev provisioning 172.22.0.1
      ip link set provisioning up 
 
-     
-
      # Need to pass the provision interface for bare metal
      if [ "$PRO_IF" ]; then
        sudo brctl addif provisioning $PRO_IF
