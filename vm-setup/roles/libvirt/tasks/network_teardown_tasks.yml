@@ -16,8 +16,8 @@
 
 - name: Delete bridges on Ubuntu
   shell: |
-     ifconfig baremetal down | true
-     ifconfig provisioning down | true
+     sudo ip link set baremetal down 
+     sudo ip link set provisioning down
      brctl delbr baremetal | true
      brctl delbr provisioning | true
 
