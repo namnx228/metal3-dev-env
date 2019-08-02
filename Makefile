@@ -12,7 +12,7 @@ launch_mgmt_cluster:
 clean: delete_mgmt_cluster host_cleanup
 
 delete_mgmt_cluster:
-	minikube delete
+	kinder delete cluster
 
 host_cleanup:
 	./host_cleanup.sh

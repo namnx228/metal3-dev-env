@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+
 OS=$(awk -F= '/^ID=/ { print $2 }' /etc/os-release | tr -d '"')
 if [[ $OS == ubuntu ]]; then
   source ubuntu_install_requirements.sh
@@ -6,16 +7,40 @@ else
   source centos_install_requirements.sh
 fi
 
-if ! which minikube 2>/dev/null ; then
-    curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
-    chmod +x minikube
-    sudo mv minikube /usr/local/bin/.
+# if ! which minikube 2>/dev/null ; then
+#     curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+#     chmod +x minikube
+#     sudo mv minikube /usr/local/bin/.
+# fi
+
+# if ! which docker-machine-driver-kvm2 2>/dev/null ; then
+#     curl -LO https://storage.googleapis.com/minikube/releases/latest/docker-machine-driver-kvm2
+#     chmod +x docker-machine-driver-kvm2
+#     sudo mv docker-machine-driver-kvm2 /usr/local/bin/.
+# fi
+
+# Install kinder to replace minikube
+eval $(go env)
+if [[! -d ~/go/src/kubeadm ]]; then
+  git clone https://github.com/kubernetes/kubeadm.git
+  git checkout e90d3a7a43d7196b3e2c22e26cfa8a6e80c0e012
 fi
 
-if ! which docker-machine-driver-kvm2 2>/dev/null ; then
-    curl -LO https://storage.googleapis.com/minikube/releases/latest/docker-machine-driver-kvm2
-    chmod +x docker-machine-driver-kvm2
-    sudo mv docker-machine-driver-kvm2 /usr/local/bin/.
+if [[! -d ~/go/src/sigs.k8s.io/kind ]]; then
+  GO111MODULE="on" go get -u sigs.k8s.io/kind@v0.4.0
+fi
+
+if [ ! -f ~/go/bin/kinder ]; then
+  GO111MODULE=on go install
+fi
+
+docker pull kindest/node:v1.15.0
+
+if [[ $(cat ~/.bashrc) != *go/bin* ]]; then
+  echo 'export PATH=$GOPATH/bin:$PATH' >> ~/.bashrc
+fi
+if [[ $PATH != *go/bin*  ]]; then
+  export PATH=$GOPATH/bin:$PATH 
 fi
 
 if ! which kubectl 2>/dev/null ; then

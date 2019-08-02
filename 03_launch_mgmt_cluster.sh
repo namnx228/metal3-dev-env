@@ -30,19 +30,14 @@ function clone_repos() {
     popd
 }
 
-function configure_minikube() {
-    minikube config set vm-driver kvm2
-}
+# function configure_minikube() {
+#     minikube config set vm-driver kvm2
+# }
 
-function launch_minikube() {
-    minikube start
-    # The interface doesn't appear in the minikube VM with --live,
-    # so just attach it and make it reboot.
-    sudo virsh attach-interface --domain minikube \
-        --model virtio --source provisioning \
-        --type network --config
-    minikube stop
-    minikube start
+function launch_kinder() {
+    kinder create cluster
+    kinder do kubeadm-init
+    export KUBECONFIG="$(kinder get kubeconfig-path)"
 }
 
 function launch_baremetal_operator() {
@@ -95,8 +90,8 @@ function launch_cluster_api() {
 }
 
 clone_repos
-configure_minikube
-launch_minikube
+# configure_minikube
+launch_kinder
 launch_baremetal_operator
 apply_bm_hosts
 launch_cluster_api
