@@ -88,3 +88,6 @@ fi
 sudo pip install \
   lolcat \
   yq
+
+# Create Go directory
+mkdir -p ${HOME}/go/{bin,src,pkg/mod} 

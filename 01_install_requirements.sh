@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-
+set -xe
 OS=$(awk -F= '/^ID=/ { print $2 }' /etc/os-release | tr -d '"')
 if [[ $OS == ubuntu ]]; then
   source ubuntu_install_requirements.sh
@@ -21,12 +21,16 @@ fi
 
 # Install kinder to replace minikube
 eval $(go env)
-if [[! -d ~/go/src/kubeadm ]]; then
+if [ ! -d ~/go/src/kubeadm ]; then
+  pushd ~/go/src/
   git clone https://github.com/kubernetes/kubeadm.git
+  pushd kubeadm
   git checkout e90d3a7a43d7196b3e2c22e26cfa8a6e80c0e012
+  popd
+  popd
 fi
 
-if [[! -d ~/go/src/sigs.k8s.io/kind ]]; then
+if [ ! -d ~/go/src/sigs.k8s.io/kind ]; then
   GO111MODULE="on" go get -u sigs.k8s.io/kind@v0.4.0
 fi
 
