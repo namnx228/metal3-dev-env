@@ -32,7 +32,7 @@ The `Makefile` runs a series of scripts, described here:
 * `02_configure_host.sh` - Create a set of VMs that will be managed as if they
   were bare metal hosts.
 
-* `03_launch_mgmt_cluster.sh` - Launch a management cluster using `minikube` and
+* `03_launch_mgmt_cluster.sh` - Launch a management cluster using `kinder` and
   run the `baremetal-operator` on that cluster.
 
 To tear down the environment, run `make clean`.
