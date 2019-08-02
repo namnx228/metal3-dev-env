@@ -13,20 +13,6 @@ source lib/common.sh
 # Update to latest packages first
 sudo apt -y update
 
-# Install EPEL required by some packages
-# if [ ! -f /etc/yum.repos.d/epel.repo ] ; then
-#     if grep -q "Red Hat Enterprise Linux" /etc/redhat-release ; then
-#         sudo yum -y install http://mirror.centos.org/centos/7/extras/x86_64/Packages/epel-release-7-11.noarch.rpm
-#     else
-#         sudo yum -y install epel-release --enablerepo=extras
-#     fi
-# fi
-
-# Work around a conflict with a newer zeromq from epel
-# if ! grep -q zeromq /etc/yum.repos.d/epel.repo; then
-#   sudo sed -i '/enabled=1/a exclude=zeromq*' /etc/yum.repos.d/epel.repo
-# fi
-
 # Install required packages
 
 sudo apt -y install \
@@ -42,8 +28,6 @@ sudo apt -y install \
   psmisc \
   python-pip \
   wget
-
-
 
 # Install pyenv
 
@@ -98,7 +82,13 @@ sudo apt -y install \
   python-lxml \
   unzip \
   yarn \
-  genisoimage
+  genisoimage \
+  gir1.2-polkit-1.0 \
+  libpolkit-agent-1-0 \
+  libpolkit-backend-1-0 \
+  libpolkit-gobject-1-0 \
+
+
 
 
 if [[ "${CONTAINER_RUNTIME}" == "podman" ]]; then
@@ -131,5 +121,5 @@ sudo pip install \
   netaddr \
   requests \
   setuptools \
-  libvirt-python \
+  libvirt-python 
 

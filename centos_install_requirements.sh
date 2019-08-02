@@ -55,6 +55,26 @@ sudo tripleo-repos current-tripleo
 # There are some packages which are newer in the tripleo repos
 sudo yum -y update
 
+# Dependency for libvirt
+if [[ $os_version == "7" ]]; then
+  sudo yum install -y \
+  libvirt-python \
+  polkit-pkla-compat \
+  python-virtualbmc \
+  python-lxml \
+  python-netaddr 
+fi
+
+# We expect virtualbmc to already be installed on rhel8 as a pre-req to running this,
+# as there's no rhel package available yet.
+
+if [[ $os_version == "8" ]]; then
+  sudo yum install -y \
+  python3-libvirt \
+  python3-lxml  \
+  python3-netaddr 
+fi
+
 # make sure additional requirments are installed
 sudo yum -y install \
   ansible \
@@ -67,10 +87,7 @@ sudo yum -y install \
   nodejs \
   python-ironicclient \
   python-ironic-inspector-client \
-  python-lxml \
-  python-netaddr \
   python-openstackclient \
-  python-virtualbmc \
   qemu-kvm \
   redhat-lsb-core \
   virt-install \
