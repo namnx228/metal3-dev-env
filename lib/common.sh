@@ -2,6 +2,8 @@
 
 eval "$(go env)"
 
+CONTAINER_RUNTIME=docker
+
 SCRIPTDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 USER=`whoami`
 
