@@ -19,6 +19,8 @@ fi
 #     sudo mv docker-machine-driver-kvm2 /usr/local/bin/.
 # fi
 
+# Create Go directory
+mkdir -p ${HOME}/go/{bin,src,pkg/mod} 
 # Install kinder to replace minikube
 eval $(go env)
 if [ ! -d ~/go/src/kubeadm ]; then
