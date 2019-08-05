@@ -35,7 +35,9 @@ if [ ! -d ~/go/src/sigs.k8s.io/kind ]; then
 fi
 
 if [ ! -f ~/go/bin/kinder ]; then
+  pushd $HOME/go/src/kubeadm/kinder
   GO111MODULE=on go install
+  popd
 fi
 
 docker pull kindest/node:v1.15.0
