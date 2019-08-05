@@ -45,7 +45,7 @@ fi
 sudo docker pull kindest/node:v1.15.0
 
 if [[ $(cat ~/.bashrc) != *go/bin* ]]; then
-  echo 'export PATH=$GOPATH/bin:$PATH' >> ~/.bashrc
+  echo "export PATH=$GOPATH/bin:$PATH" >> ~/.bashrc
 fi
 if [[ $PATH != *go/bin*  ]]; then
   export PATH=$GOPATH/bin:$PATH 
