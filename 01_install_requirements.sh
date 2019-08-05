@@ -40,7 +40,7 @@ if [ ! -f ~/go/bin/kinder ]; then
   popd
 fi
 
-docker pull kindest/node:v1.15.0
+sudo docker pull kindest/node:v1.15.0
 
 if [[ $(cat ~/.bashrc) != *go/bin* ]]; then
   echo 'export PATH=$GOPATH/bin:$PATH' >> ~/.bashrc
