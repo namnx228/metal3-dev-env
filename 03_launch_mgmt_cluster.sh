@@ -38,6 +38,13 @@ function launch_kinder() {
     kinder create cluster
     kinder do kubeadm-init
     export KUBECONFIG="$(kinder get kubeconfig-path)"
+    if [[ $(cat ${HOME}/.bashrc) != *KUBECONFIG* ]]; then
+      echo '
+if [ -e ${HOME}/go/bin/kinder  ]; then
+  export KUBECONFIG="$(kinder get kubeconfig-path)"
+fi
+'   >> ${HOME}/.bashrc
+    fi
 }
 
 function launch_baremetal_operator() {
