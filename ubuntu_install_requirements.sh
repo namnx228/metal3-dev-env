@@ -77,9 +77,6 @@ sudo apt -y install \
   unzip \
   yarn \
   genisoimage \
-  libvirt-bin \
-  libvirt-clients \
-  libvirt-dev \
 
 
 if [[ "${CONTAINER_RUNTIME}" == "podman" ]]; then
@@ -112,5 +109,4 @@ sudo pip install \
   netaddr \
   requests \
   setuptools \
-  libvirt-python 
 

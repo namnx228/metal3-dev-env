@@ -62,15 +62,11 @@ sudo yum -y install \
   bind-utils \
   jq \
   libguestfs-tools \
-  libvirt \
-  libvirt-devel \
-  libvirt-daemon-kvm \
   nodejs \
   python-ironicclient \
   python-ironic-inspector-client \
   python-openstackclient \
   redhat-lsb-core \
-  virt-install \
   unzip \
   genisoimage
 
