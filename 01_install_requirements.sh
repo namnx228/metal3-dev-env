@@ -51,3 +51,9 @@ if [ ! -f ${CENTOS_IMAGE} ] ; then
     md5sum ${CENTOS_IMAGE} | awk '{print $1}' > ${CENTOS_IMAGE}.md5sum
 fi
 popd
+
+ANSIBLE_FORCE_COLOR=true ansible-playbook \
+  -e "working_dir=$WORKING_DIR" \
+  -e "virthost=$HOSTNAME" \
+  -i vm-setup/inventory.ini
+  -b -vvv vm-setup/libvirt-package-playbook.yml

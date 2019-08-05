@@ -1,0 +1,11 @@
+---
+- name: Libvirt dependency setup
+  hosts: virthost
+  connection: local
+  gather_facts: true
+  tasks:
+    - import_role:
+        name: libvirt
+      vars:
+        libvirt_action: "install_package"
+

@@ -1,3 +1,7 @@
+- name: Install libvirt dependencies
+  block:
+    - include_tasks: install_package_tasks.yml
+  when: libvirt_action == "install_package"
 - name: Start libvirtd
   service:
     name: "{{ libvirtd_service }}"

@@ -72,23 +72,14 @@ sudo apt -y update
 ##No bind-utils. It is for host, nslookop,..., no need in ubuntu
 sudo apt -y install \
   jq \
-  libguestfs-tools \
   nodejs \
-  qemu-kvm \
-  libvirt-bin libvirt-clients libvirt-dev \
-  python-ironicclient \
-  python-ironic-inspector-client \
   golang-go \
-  python-lxml \
   unzip \
   yarn \
   genisoimage \
-  gir1.2-polkit-1.0 \
-  libpolkit-agent-1-0 \
-  libpolkit-backend-1-0 \
-  libpolkit-gobject-1-0 \
-
-
+  libvirt-bin \
+  libvirt-clients \
+  libvirt-dev \
 
 
 if [[ "${CONTAINER_RUNTIME}" == "podman" ]]; then
