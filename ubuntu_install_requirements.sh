@@ -71,6 +71,9 @@ sudo apt -y update
 
 ##No bind-utils. It is for host, nslookop,..., no need in ubuntu
 sudo apt -y install \
+  libvirt-bin \
+  libvirt-clients \
+  libvirt-dev \
   jq \
   nodejs \
   golang-go \
@@ -109,4 +112,5 @@ sudo pip install \
   netaddr \
   requests \
   setuptools \
+  libvirt-python 
 

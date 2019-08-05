@@ -51,15 +51,11 @@ libvirt_packages_rhel8:
 
 ubuntu_libvirt_packages:
   - qemu-kvm
-  - libvirt-bin
-  - libvirt-clients
-  - libvirt-dev
   - libguestfs-tools
   - gir1.2-polkit-1.0
   - libpolkit-agent-1-0
   - libpolkit-backend-1-0
   - libpolkit-gobject-1-0
-  - python-libvirt
 
 # The name of the libvirt service.
 libvirtd_service: libvirtd

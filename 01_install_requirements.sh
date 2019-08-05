@@ -55,5 +55,5 @@ popd
 ANSIBLE_FORCE_COLOR=true ansible-playbook \
   -e "working_dir=$WORKING_DIR" \
   -e "virthost=$HOSTNAME" \
-  -i vm-setup/inventory.ini
+  -i vm-setup/inventory.ini \
   -b -vvv vm-setup/libvirt-package-playbook.yml
