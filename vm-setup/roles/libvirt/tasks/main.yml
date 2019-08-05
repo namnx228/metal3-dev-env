@@ -4,7 +4,7 @@
     - include_tasks: network_setup_tasks.yml
     - include_tasks: vm_setup_tasks.yml
       when: vm_platform == "libvirt"
-  when: libvirt_action == "setup" || libvirt_action == "install_package"
+  when: libvirt_action == "setup" or libvirt_action == "install_package"
 
 - name: libvirt role teardown tasks
   block:
