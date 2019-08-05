@@ -44,6 +44,8 @@ fi
 
 sudo docker pull kindest/node:v1.15.0
 
+sudo usermod -aG docker $USER
+
 if [[ $(cat ~/.bashrc) != *go/bin* ]]; then
   echo "export PATH=$GOPATH/bin:$PATH" >> ~/.bashrc
 fi
