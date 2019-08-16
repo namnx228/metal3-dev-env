@@ -1,6 +1,6 @@
 packages_installation:
   ubuntu:
-    package:
+    packages:
      - crudini 
      - curl 
      - dnsmasq 
@@ -40,7 +40,7 @@ packages_installation:
      - setuptools 
      - libvirt-python 
   centos:
-    package:
+    packages:
      - crudini 
      - curl 
      - dnsmasq 

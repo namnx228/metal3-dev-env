@@ -9,7 +9,7 @@
     - import_role:
         name: packages_installation
   vars: 
-    package: "{{ packages_installation }}"
+    packages: "{{ packages_installation }}"
 
 
         

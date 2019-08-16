@@ -2,12 +2,12 @@
   block:
     - name: Install packages using standard package manager
       package:
-        name: "{{ package.ubuntu.package +  package.ubuntu.libvirt }}"
+        name: "{{ packages.ubuntu.packages +  packages.ubuntu.libvirt }}"
         state: present
       become: true
     - name: Install packages using pip
       pip:
-        name: "{{ package.ubuntu.pip }}"
+        name: "{{ packages.ubuntu.pip }}"
         state: present
       become: true
   when: ansible_facts['distribution'] == "Ubuntu"
@@ -20,17 +20,17 @@
         - name: Install packages on rhel7
           when: ansible_lsb.major_release|int == 7
           package:
-             name: "{{ package.centos.package +  package.centos.libvirt.rhel7 }}"
+             name: "{{ packages.centos.packages +  packages.centos.libvirt.rhel7 }}"
              state: present
         - name: Install packages on rhel8
           when: ansible_lsb.major_release|int == 8
           package:
-             name: "{{ package.centos.package + package.centos.libvirt.rhel8 }}"
+             name: "{{ packages.centos.packages + packages.centos.libvirt.rhel8 }}"
              state: present
       become: true
     - name: Install packages using pip
       pip:
-        name: "{{ package.centos.pip }}"
+        name: "{{ packages.centos.pip }}"
         state: present
       become: true
   when: ansible_os_family == "RedHat"
