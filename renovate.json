@@ -9,6 +9,9 @@
       "automerge": false
     }
   ],
+  "prHourlyLimit": 5,
+  "prConcurrentLimit": 10,
   "rangeStrategy": "bump",
-  "renovateFork": true
+  "renovateFork": true,
+  "includeForks": true
 }
